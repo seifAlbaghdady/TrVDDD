@@ -22,7 +22,8 @@ def parse_options():
 
 
 def parse_ast_js(source):
-
+    # print current path
+    print(os.getcwd())
     JS_LANGUAGE = Language("build_languages/my-languages.so", "javascript")
     parser = Parser()
     parser.set_language(JS_LANGUAGE)  # set the parser for certain language
