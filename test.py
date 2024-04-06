@@ -1,12 +1,10 @@
 import pickle
 import pandas as pd
 
-##add another row
+# code in js got vulnerability
 test_data_single_row = {
-    "label": [0],
-    "code": [
-        'window.intercomSettings = { app_id: appId, name: myUserName, email: myUserEmail, user_hash: "my-user-hash" };'
-    ],
+    "label": [1],
+    "code": ["eval(userInput);"],
 }
 df = pd.DataFrame(test_data_single_row)
 
