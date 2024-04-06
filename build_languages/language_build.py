@@ -5,8 +5,8 @@ Language.build_library(
     "my-languages.so",
     # Include one or more languages
     [
-        "../languages/tree-sitter-c",
-        "../languages/tree-sitter-cpp",
-        "../languages/tree-sitter-javascript",
+        "./languages/tree-sitter-c",
+        "./languages/tree-sitter-cpp",
+        "./languages/tree-sitter-javascript",
     ],
 )
