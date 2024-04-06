@@ -107,7 +107,7 @@ def evaluation():
     )
     loss_function = torch.nn.CrossEntropyLoss()
 
-    total_acc = 0.0
+    total_acc = torch.tensor(0.0)  # Change to tensor
     total_loss = 0.0
     total = 0.0
     i = 0
@@ -133,7 +133,9 @@ def evaluation():
         output = model(test_inputs)
         loss = loss_function(output, Variable(test_labels))
         _, predicted = torch.max(output.data, 1)
-        total_acc += (predicted == test_labels).sum()
+        total_acc += (
+            (predicted == test_labels).sum().to(torch.float32)
+        )  # Change to tensor and cast to float
         all_labels += test_labels.tolist()
         all_preds += predicted.tolist()
         total += len(test_labels)
