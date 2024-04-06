@@ -143,7 +143,7 @@ def evaluation():
         print("labels: ", test_labels)
         print("------------------------------------")
 
-    print("Testing results(Acc):", total_acc.item() / total)
+    # print("Testing results(Acc):", total_acc.item() / total)
     evaluate_multi(all_preds, all_labels)
 
 
