@@ -4,7 +4,9 @@ import pandas as pd
 # code in js got vulnerability
 test_data_single_row = {
     "label": [0],
-    "code": ["for (var i = 1; i <= 5; i++) {console.log(i);}"],
+    "code": [
+        "for (var i = 1; i <= 5; i++) {eval('alert(\"Vulnerability!\")'); console.log(i);}"
+    ],
 }
 df = pd.DataFrame(test_data_single_row)
 
