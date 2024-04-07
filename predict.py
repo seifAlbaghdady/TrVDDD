@@ -73,6 +73,7 @@ def evaluation():
     model.eval()
 
     all_preds = []
+    i = 0  # Initialize i here
     while i < len(test_data):
         batch = get_batch(test_data, i, BATCH_SIZE)
         i += BATCH_SIZE
