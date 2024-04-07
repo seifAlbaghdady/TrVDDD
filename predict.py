@@ -28,7 +28,7 @@ def get_batch(dataset, idx, bs):
     for _, item in tmp.iterrows():
         data.append(item["code"])
         labels.append(item["label"])
-    return data, torch.LongTensor(labels)
+    return data, labels
 
 
 def evaluation():
