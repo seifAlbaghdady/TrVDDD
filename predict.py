@@ -9,13 +9,6 @@ from torch.autograd import Variable
 from nltk.tokenize import word_tokenize
 
 
-def preprocess_code(code_snippet):
-    tokens = word_tokenize(code_snippet)  # Tokenize code snippet into words
-    # Convert tokens into numerical representations (e.g., indices of words in a vocabulary)
-    numerical_representation = [word2idx[token] for token in tokens]
-    return numerical_representation
-
-
 def parse_options():
     parser = argparse.ArgumentParser(description="TrVD training.")
     parser.add_argument(
