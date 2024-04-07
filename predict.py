@@ -78,9 +78,9 @@ def evaluation():
         batch = get_batch(test_data, i, BATCH_SIZE)
         i += BATCH_SIZE
         test_inputs, test_labels = batch
-        test_inputs = torch.tensor(test_inputs)
+        test_inputs = [torch.tensor(item) for item in test_inputs]
         if USE_GPU:
-            test_inputs = test_inputs.to(device)
+            test_inputs = [item.to(device) for item in test_inputs]
         model.batch_size = len(test_labels)
         output = model(test_inputs)
         _, predicted = torch.max(output.data, 1)
