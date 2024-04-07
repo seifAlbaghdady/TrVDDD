@@ -5,7 +5,7 @@ import pandas as pd
 test_data_single_row = {
     "label": [0],
     "code": [
-        'var userInput = "\'; DROP TABLE users; --"; var query = "SELECT * FROM users WHERE username = \'" + userInput + "\'";'
+        "var userInput = 'example'; var query = 'SELECT * FROM users WHERE username = ?';"
     ],
 }
 
