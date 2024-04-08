@@ -5,7 +5,7 @@ import pandas as pd
 test_data_single_row = {
     "label": [0],
     "code": [
-        "var userInput = 'example'; var query = 'SELECT * FROM users WHERE username = ?';"
+        'var code = "function FUN1(VAR1) { var VAR3 = VAR1.VAR4; delete VAR3; }";'
     ],
 }
 
