@@ -16,6 +16,7 @@ import pandas as pd
 
 df = pd.read_excel("dataset/updated_data2.xlsx", usecols=["label", "code"])
 
+df_filtered = df.loc[df["label"] == 0]
 
 with open("./dataset/trvd_test.pkl", "wb") as f:
-    pickle.dump(df, f)
+    pickle.dump(df_filtered, f)
