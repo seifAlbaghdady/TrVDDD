@@ -364,9 +364,20 @@ def evaluation():
             _, predicted = torch.max(output.data, 1)
         total_acc += (predicted == test_labels).sum().item()
 
+        # Fix softmax warning and adjust tensor dimensions
+        softmax_output = F.softmax(output, dim=1)
+        _, predicted = torch.max(softmax_output, 1)
+
+        # Ensure output tensor dimensions match labels tensor dimensions
+        output_dim_matched = torch.zeros_like(output)
+        output_dim_matched[:, :LABELS] = output
+
         # Compare predicted values to labels to include non-exact matches
         correct_non_exact += (
-            ((predicted == test_labels) | ((predicted != test_labels) & (output > 0)))
+            (
+                (predicted == test_labels)
+                | ((predicted != test_labels) & (output_dim_matched > 0))
+            )
             .sum()
             .item()
         )
