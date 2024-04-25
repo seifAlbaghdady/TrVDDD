@@ -238,35 +238,49 @@
 #     # print(cleaned_gadget)
 #     return cleaned_gadget
 
-
 import re
 
-# Regular expressions for cleaning
-rx_comment = re.compile(r"//.*?$|/\*.*?\*/", re.MULTILINE | re.DOTALL)
-rx_string_literal = re.compile(r'".*?"', re.DOTALL)
-rx_char_literal = re.compile(r"'.*?'", re.DOTALL)
-rx_non_ascii = re.compile(r"[^\x00-\x7f]")
 
+def clean_gadget(gadget):
 
-def clean_gadget(code_list):
-    cleaned_code = []
+    # Regular expression patterns for function and variable names
+    rx_fun = re.compile(r"\b(function)\s+([_A-Za-z]\w*)\b")
+    rx_var = re.compile(r"\b(var|let|const)\s+([_A-Za-z]\w*)\b")
 
-    for code in code_list:
-        if not isinstance(code, str):
-            continue
+    # Dictionary to map function and variable names to symbols
+    fun_symbols = {}
+    var_symbols = {}
 
+    fun_count = 1
+    var_count = 1
+
+    cleaned_gadget = []
+
+    for line in gadget:
         # Remove comments
-        code = rx_comment.sub("", code)
+        line = re.sub(r"//.*", "", line)
+        line = re.sub(r"/\*.*?\*/", "", line)
 
-        # Remove string literals
-        code = rx_string_literal.sub('""', code)
+        # Replace function names with symbols
+        for match in rx_fun.finditer(line):
+            func_keyword, func_name = match.groups()
+            if func_name not in fun_symbols:
+                fun_symbols[func_name] = f"FUN{fun_count}"
+                fun_count += 1
+            line = re.sub(
+                r"\b" + re.escape(func_name) + r"\b", fun_symbols[func_name], line
+            )
 
-        # Remove character literals
-        code = rx_char_literal.sub("''", code)
+        # Replace variable names with symbols
+        for match in rx_var.finditer(line):
+            var_keyword, var_name = match.groups()
+            if var_name not in var_symbols:
+                var_symbols[var_name] = f"VAR{var_count}"
+                var_count += 1
+            line = re.sub(
+                r"\b" + re.escape(var_name) + r"\b", var_symbols[var_name], line
+            )
 
-        # Replace non-ASCII characters with empty string
-        code = rx_non_ascii.sub("", code)
+        cleaned_gadget.append(line)
 
-        cleaned_code.append(code)
-
-    return cleaned_code
+    return cleaned_gadget
