@@ -241,90 +241,15 @@
 
 import re
 
-# Keywords for JavaScript; immutable set
-keywords = frozenset(
-    [
-        "abstract",
-        "await",
-        "boolean",
-        "break",
-        "byte",
-        "case",
-        "catch",
-        "char",
-        "class",
-        "const",
-        "continue",
-        "debugger",
-        "default",
-        "delete",
-        "do",
-        "double",
-        "else",
-        "enum",
-        "export",
-        "extends",
-        "false",
-        "final",
-        "finally",
-        "float",
-        "for",
-        "function",
-        "goto",
-        "if",
-        "implements",
-        "import",
-        "in",
-        "instanceof",
-        "int",
-        "interface",
-        "let",
-        "long",
-        "native",
-        "new",
-        "null",
-        "package",
-        "private",
-        "protected",
-        "public",
-        "return",
-        "short",
-        "static",
-        "super",
-        "switch",
-        "synchronized",
-        "this",
-        "throw",
-        "throws",
-        "transient",
-        "true",
-        "try",
-        "typeof",
-        "var",
-        "void",
-        "volatile",
-        "while",
-        "with",
-        "yield",
-    ]
-)
-
-# Regular expression to catch multi-line comment
-rx_comment = re.compile(r"\/\*.*?\*\/", re.DOTALL)
-# Regular expression to find function names
-rx_function = re.compile(r"\bfunction\s+([_$a-zA-Z][\w$]*)\s*\(")
-# Regular expression to find variable names
-rx_variable = re.compile(r"\bvar\s+([_$a-zA-Z][\w$]*)\b")
+# Regular expressions for cleaning
+rx_comment = re.compile(r"//.*?$|/\*.*?\*/", re.MULTILINE | re.DOTALL)
+rx_string_literal = re.compile(r'".*?"', re.DOTALL)
+rx_char_literal = re.compile(r"'.*?'", re.DOTALL)
+rx_non_ascii = re.compile(r"[^\x00-\x7f]")
 
 
-def clean_gadget(code):
+def clean_gadget(code_list):
     cleaned_code = []
-
-    # Regular expressions for cleaning
-    rx_comment = re.compile(r"//.*?$|/\*.*?\*/", re.MULTILINE | re.DOTALL)
-    rx_string_literal = re.compile(r'".*?"', re.DOTALL)
-    rx_char_literal = re.compile(r"'.*?'", re.DOTALL)
-    rx_non_ascii = re.compile(r"[^\x00-\x7f]")
 
     for code in code_list:
         if not isinstance(code, str):
