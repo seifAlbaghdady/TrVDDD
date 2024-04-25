@@ -14,9 +14,9 @@ import pandas as pd
 #     pickle.dump(df, f)
 
 
-df = pd.read_excel("dataset/updated_data2.xlsx", usecols=["label", "code"])
+df = pd.read_excel("dataset/DatasetMadeBySeif.xlsx", usecols=["label", "code"])
 
-df_filtered = df.loc[df["label"] == 1]
+# df_filtered = df.loc[df["label"] == 1]
 
 with open("./dataset/trvd_test.pkl", "wb") as f:
-    pickle.dump(df_filtered, f)
+    pickle.dump(df, f)
