@@ -318,10 +318,30 @@ rx_variable = re.compile(r"\bvar\s+([_$a-zA-Z][\w$]*)\b")
 
 
 def clean_gadget(code):
-    # Replace multi-line comments with an empty string
-    code = rx_comment.sub("", code)
-    # Replace function names with 'FUN#'
-    code = rx_function.sub(r"function FUN\g<1>(", code)
-    # Replace variable names with 'VAR#'
-    code = rx_variable.sub(r"var VAR\g<1>", code)
-    return code
+    cleaned_code = []
+
+    # Regular expressions for cleaning
+    rx_comment = re.compile(r"//.*?$|/\*.*?\*/", re.MULTILINE | re.DOTALL)
+    rx_string_literal = re.compile(r'".*?"', re.DOTALL)
+    rx_char_literal = re.compile(r"'.*?'", re.DOTALL)
+    rx_non_ascii = re.compile(r"[^\x00-\x7f]")
+
+    for code in code_list:
+        if not isinstance(code, str):
+            continue
+
+        # Remove comments
+        code = rx_comment.sub("", code)
+
+        # Remove string literals
+        code = rx_string_literal.sub('""', code)
+
+        # Remove character literals
+        code = rx_char_literal.sub("''", code)
+
+        # Replace non-ASCII characters with empty string
+        code = rx_non_ascii.sub("", code)
+
+        cleaned_code.append(code)
+
+    return cleaned_code
